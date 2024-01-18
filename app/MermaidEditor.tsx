@@ -2,7 +2,7 @@ import React from 'react'
 import Mermaid from './components/Mermaid'
 import { Textarea } from '@/components/ui/textarea'
 import { useTheme } from 'next-themes'
-import { useCode } from './page'
+import { useCode } from './CodeContext'
 
 export default function MermaidEditor({ className }: { className?: string }) {
   const [input, setInput] = React.useState('')

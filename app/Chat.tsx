@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useChat } from 'ai/react'
 import { useTheme } from 'next-themes'
-import { useCode } from './page'
+import { useCode } from './CodeContext'
 
 function Role({ role }: { role: string }) {
   if (role == 'user')

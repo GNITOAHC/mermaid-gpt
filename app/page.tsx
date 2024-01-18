@@ -3,20 +3,7 @@ import React from 'react'
 import Script from 'next/script'
 import Chat from './Chat'
 import MermaidEditor from './MermaidEditor'
-
-type codeContextType = {
-  code: string
-  setCode: React.Dispatch<React.SetStateAction<string>>
-}
-const codeContextDefault: codeContextType = {
-  code: '',
-  setCode: () => {},
-}
-const CodeContext = React.createContext<codeContextType>(codeContextDefault)
-
-export function useCode() {
-  return React.useContext(CodeContext)
-}
+import { CodeContext } from './CodeContext'
 
 export default function Home() {
   const [code, setCode] = React.useState('')
