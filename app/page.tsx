@@ -24,6 +24,7 @@ export default function Home() {
   return (
     <main className="flex flex-col h-full items-center justify-between p-12">
       <Script
+        id="mermaid_script"
         type="module"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
