@@ -68,7 +68,7 @@ export function ModeToggle() {
 
 export default function Topbar() {
   return (
-    <header className="flex items-center justify-between w-full h-16 px-8 bg-gray-800 sticky top-0">
+    <header className="flex items-center justify-between w-full h-16 px-8 bg-gray-800 sticky top-0 z-50">
       {/*
       <NavigationMenu>
         <NavigationMenuList>

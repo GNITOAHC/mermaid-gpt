@@ -18,14 +18,14 @@ export default function MermaidEditor({ className }: { className?: string }) {
 
   return (
     <main className={className}>
-      <div className="flex flex-col">
+      <div className="flex flex-col h-full overflow-y-scroll">
         <Mermaid
           text={input}
           mermaidId="mermaid-editor"
           theme={theme ?? 'default'}
         />
         <Textarea
-          className="w-full h-64"
+          className="w-full min-h-64"
           value={input}
           placeholder="Type mermaid code here..."
           onChange={(e) => setInput(e.target.value)}
