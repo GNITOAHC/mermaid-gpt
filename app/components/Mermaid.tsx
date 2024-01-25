@@ -27,7 +27,7 @@ export default function Mermaid({
       logLevel: 5,
     })
     setMounted(true)
-  })
+  }, [mermaidTheme])
 
   useEffect(() => {
     if (!mounted) return
@@ -49,7 +49,7 @@ export default function Mermaid({
       ref.current.innerHTML = svg
     }
     render()
-  }, [text, mounted])
+  }, [text, mounted, mermaidId])
 
   return <div key={`preview${mermaidId}`} ref={ref} />
 }

@@ -14,7 +14,7 @@ export default function MermaidEditor({ className }: { className?: string }) {
       setInput(code)
       setCode('')
     }
-  }, [code])
+  }, [code, setCode])
 
   return (
     <main className={className}>
