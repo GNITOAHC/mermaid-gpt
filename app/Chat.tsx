@@ -81,7 +81,7 @@ export default function Chat({ className }: { className?: string }) {
           <Input
             className="w-full"
             value={input}
-            placeholder="Please give me a textual representation of a simple Mermaid graph illustrating ..."
+            placeholder="Please give me a graph illustrating ..."
             onChange={handleInputChange}
           />
         </form>
