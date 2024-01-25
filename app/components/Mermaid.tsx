@@ -44,7 +44,7 @@ export default function Mermaid({
         `preview${mermaidId}`,
         text
       )
-      console.log(svg)
+      // console.log(svg)
       // const { svg } = await mermaid.mermaidAPI.render('preview', text)
       ref.current.innerHTML = svg
     }
