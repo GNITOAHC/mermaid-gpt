@@ -26,9 +26,9 @@ export async function POST(req: Request) {
 
   // console.log(messages)
 
-  console.log(data)
+  // console.log(data)
   if (!data || !data.imageUrl) {
-    console.log('No image')
+    // console.log('No image')
     const response = await openai.chat.completions.create({
       model: 'gpt-4-vision-preview',
       stream: true,
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
     return new StreamingTextResponse(OpenAIStream(response))
   }
 
-  console.log('Yes imageUrl')
+  // console.log('Yes imageUrl')
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4-vision-preview',
