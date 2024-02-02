@@ -119,6 +119,7 @@ export default function Chat({ className }: { className?: string }) {
           value={imageUrl}
           placeholder="Image URL"
           onChange={(e) => setImageUrl(e.target.value)}
+          onPaste={(e) => setImageUrl(e.clipboardData.getData('text'))}
         />
         <form onSubmit={(e) => promptSubmit(e, imageUrl)}>
           <Textarea
