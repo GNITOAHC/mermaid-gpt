@@ -1,12 +1,11 @@
-import OpenAI from 'openai'
-
-export const runtime = 'edge'
-
 import { NextResponse } from 'next/server'
+import { generateText } from 'ai'
+import { createOpenAI } from '@ai-sdk/openai'
+
 export async function POST(req: Request) {
   const { conversation, url } = await req.json()
 
-  const openai = new OpenAI({
+  const openai = createOpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   })
 
@@ -15,23 +14,21 @@ export async function POST(req: Request) {
   else {
     content = [
       { type: 'text', text: conversation },
-      { type: 'image_url', image_url: { url: url } },
+      { type: 'image', image: new URL(url) },
     ]
   }
 
-  const response = await openai.chat.completions.create({
-    model: 'gpt-4-vision-preview',
-    stream: false,
-    max_tokens: 500,
+  const result = await generateText({
+    model: openai.chat('gpt-4-vision-preview'),
     messages: [
       {
-        content: content,
         role: 'user',
+        content: content,
       },
     ],
   })
 
   return NextResponse.json({
-    message: response.choices[0].message.content ?? 'No recommendation',
+    message: result.text ?? 'No recommendation',
   })
 }

@@ -1,12 +1,11 @@
 // ./app/api/chat/route.js
-import OpenAI from 'openai'
-import { OpenAIStream, StreamingTextResponse } from 'ai'
+import { createOpenAI } from '@ai-sdk/openai'
+import { streamText } from 'ai'
 
-const openai = new OpenAI({
+const openai = createOpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
-
-export const runtime = 'edge'
+const model = openai.chat('gpt-4-vision-preview')
 
 const systemPrompt: string =
   'The following conversation is specific to MermaidJs. If the user ask for any kind of graphical representation, please reply with MermaidJs code. Note that the code should start with three backtick followed by keyword "mermiad" and end with three backtick, and do not use nested brackets in the code.'
@@ -21,29 +20,18 @@ export async function POST(req: Request) {
     })
   }
 
-  const initialMessages = messages.slice(0, -1)
-  const currentMessage = messages[messages.length - 1]
-
-  // console.log(messages)
-
-  // console.log(data)
   if (!data || !data.imageUrl) {
-    // console.log('No image')
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4-vision-preview',
-      stream: true,
-      max_tokens: 500,
+    const result = await streamText({
+      model: model,
       messages,
     })
-    return new StreamingTextResponse(OpenAIStream(response))
+    return result.toAIStreamResponse()
   }
 
-  // console.log('Yes imageUrl')
-
-  const response = await openai.chat.completions.create({
-    model: 'gpt-4-vision-preview',
-    stream: true,
-    max_tokens: 500,
+  const initialMessages = messages.slice(0, -1)
+  const currentMessage = messages[messages.length - 1]
+  const result = await streamText({
+    model: model,
     messages: [
       ...initialMessages,
       {
@@ -53,13 +41,12 @@ export async function POST(req: Request) {
 
           // forward the image information to OpenAI:
           {
-            type: 'image_url',
-            image_url: data.imageUrl,
+            type: 'image',
+            image: new URL(data.imageUrl),
           },
         ],
       },
     ],
   })
-  const stream = OpenAIStream(response) // Convert the response into a friendly text-stream
-  return new StreamingTextResponse(stream) // Respond with the stream
+  return result.toAIStreamResponse()
 }
